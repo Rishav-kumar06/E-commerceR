@@ -3,19 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/web/styles.css</file>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/web/index.jsp</file>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/src/java/com/myapp/db/MongoDBUtil.java</file>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/src/java/com/myapp/servlets/LogoutServlet.java</file>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/web/products.jsp</file>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/web/checkout.jsp</file>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/web/login.jsp</file>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/src/java/com/myapp/dao/UserDAO.java</file>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/web/META-INF/context.xml</file>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/src/java/com/myapp/servlets/RegisterServlet.java</file>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/src/java/com/myapp/servlets/LoginServlet.java</file>
-            <file>file:/C:/Users/rehan/Desktop/WebApplication/src/java/com/myapp/models/User.java</file>
+            <file>file:/C:/Users/risha/OneDrive/Documents/Desktop/ajt%20project/E-commerceR/src/java/com/myapp/util/HibernateUtil.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,30 +1,49 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.myapp.dao;
 
 import com.myapp.models.User;
-import java.util.ArrayList;
-import java.util.List;
+import com.myapp.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 public class UserDAO {
 
-    private static List<User> users = new ArrayList<>();
-
-    // register new user
     public boolean registerUser(User user) {
-        users.add(user);
-        return true;
+        Transaction tx = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            session.save(user);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    // login user
     public User loginUser(String email, String password) {
-        for (User u : users) {
-            if (u.getEmail().equals(email) && u.getPassword().equals(password)) {
-                return u;
-            }
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<User> query = session.createQuery(
+                "FROM User U WHERE U.email = :email AND U.password = :password", User.class);
+            query.setParameter("email", email);
+            query.setParameter("password", password);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return null;
+    }
+
+    public boolean emailExists(String email) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<User> query = session.createQuery(
+                "FROM User U WHERE U.email = :email", User.class);
+            query.setParameter("email", email);
+            return query.uniqueResult() != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true;
+        }
     }
 }

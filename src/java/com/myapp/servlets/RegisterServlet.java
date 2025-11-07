@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package com.myapp.servlets;
 
 import com.myapp.dao.UserDAO;
@@ -35,44 +31,35 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String pass = request.getParameter("password");
 
+        UserDAO dao = new UserDAO();
+
+        // Check if email already exists
+        if (dao.emailExists(email)) {
+            response.sendRedirect("register.jsp?error=exists");
+            return;
+        }
+
         // Creating user object
         User user = new User(name, email, pass);
 
-        // Saving to DB using DAO
-        UserDAO dao = new UserDAO();
+        // Saving to DB using Hibernate DAO
         boolean result = dao.registerUser(user);
 
-        // redirect based on result
+        // Redirect based on result
         if (result) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("login.jsp?success=1");
         } else {
             response.sendRedirect("register.jsp?error=1");
         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -86,7 +73,7 @@ public class RegisterServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Servlet to handle user registration";
     }// </editor-fold>
 
 }

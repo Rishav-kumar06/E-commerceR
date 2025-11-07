@@ -1,9 +1,6 @@
 package com.myapp.servlets;
 
-import com.myapp.dao.ProductDAO;
-import com.myapp.models.Product;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class AddToCartServlet extends HttpServlet {
+public class RemoveFromCartServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -21,20 +18,15 @@ public class AddToCartServlet extends HttpServlet {
             int productId = Integer.parseInt(productIdStr);
 
             HttpSession session = request.getSession();
-            // Map<ProductID, Quantity>
             Map<Integer, Integer> cart = (Map<Integer, Integer>) session.getAttribute("cartItems");
 
-            if (cart == null) {
-                cart = new HashMap<>();
+            if (cart != null && cart.containsKey(productId)) {
+                cart.remove(productId);  // remove the product
+                session.setAttribute("cartItems", cart);
             }
-
-            // Increase quantity if already in cart
-            cart.put(productId, cart.getOrDefault(productId, 0) + 1);
-
-            session.setAttribute("cartItems", cart);
         }
 
-        response.sendRedirect("ProductsServlet"); // redirect back to products
+        response.sendRedirect("ViewCartServlet"); // redirect back to cart page
     }
 
     @Override
@@ -51,6 +43,6 @@ public class AddToCartServlet extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "Servlet to add products to cart with quantities";
+        return "Servlet to remove product from cart";
     }
 }

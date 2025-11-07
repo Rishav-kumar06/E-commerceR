@@ -1,36 +1,43 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.myapp.dao;
 
 import com.myapp.models.Product;
-import java.util.ArrayList;
+import com.myapp.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import java.util.List;
 
 public class ProductDAO {
 
-    private static List<Product> products = new ArrayList<>();
-
-    static {
-        // Sample products for testing
-        products.add(new Product(1, "Sample Product 1", 49.99, "https://via.placeholder.com/150"));
-        products.add(new Product(2, "Sample Product 2", 79.99, "https://via.placeholder.com/150"));
-        products.add(new Product(3, "Sample Product 3", 99.99, "https://via.placeholder.com/150"));
-    }
-
-    // get all products
     public List<Product> getAllProducts() {
-        return products;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("FROM Product", Product.class).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    // get product by ID
     public Product getProductById(int id) {
-        for (Product p : products) {
-            if (p.getId() == id) {
-                return p;
-            }
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Product> query = session.createQuery("FROM Product P WHERE P.id = :id", Product.class);
+            query.setParameter("id", id);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return null;
+    }
+
+    public void saveOrUpdateProduct(Product product) {
+        Transaction tx = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            session.saveOrUpdate(product);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
     }
 }
