@@ -7,17 +7,9 @@
     </head>
 
     <body>
-        <header>
-            <h1>Welcome to My E-Commerce Store</h1>
-            <nav>
-                <a href="products.jsp">Products</a>
-                <a href="register.jsp">Register</a>
-                <a href="login.jsp">Login</a>
-                <a href="cart.jsp">Cart</a>
-            </nav>
-        </header>
+        <jsp:include page="/includes/header.jsp" />
 
-        <section class="hero">
+        <section class="hero" style="flex: auto;">
             <h2>Best Online Shopping Experience</h2>
             <p>Explore amazing products at affordable prices.</p>
             <a href="products.jsp" class="btn">Shop Now</a>

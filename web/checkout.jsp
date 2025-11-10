@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.myapp.models.Product" %>
+<%@ page import="com.myapp.model.Product" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
@@ -8,14 +8,8 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header>
-    <h1>Checkout</h1>
-    <nav>
-        <a href="index.jsp">Home</a>
-        <a href="products.jsp">Products</a>
-        <a href="ViewCartServlet">Cart</a>
-    </nav>
-</header>
+<jsp:include page="/includes/header.jsp" />
+<h2 class="page-title">Checkout</h2>
 
 <section class="form-container">
 <%

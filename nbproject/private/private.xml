@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/risha/OneDrive/Documents/Desktop/ajt%20project/E-commerceR/src/java/com/myapp/util/HibernateUtil.java</file>
+            <file>file:/C:/Users/rehan/Desktop/WebApplication/src/java/com/myapp/servlets/LoginServlet.java</file>
+            <file>file:/C:/Users/rehan/Desktop/WebApplication/src/java/com/myapp/dao/UserDAO.java</file>
+            <file>file:/C:/Users/rehan/Desktop/WebApplication/src/java/com/myapp/util/HibernateUtil.java</file>
+            <file>file:/C:/Users/rehan/Desktop/WebApplication/web/index.jsp</file>
+            <file>file:/C:/Users/rehan/Desktop/WebApplication/web/includes/header.jsp</file>
+            <file>file:/C:/Users/rehan/Desktop/WebApplication/web/styles.css</file>
         </group>
     </open-files>
 </project-private>

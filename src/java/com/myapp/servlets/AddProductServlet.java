@@ -1,7 +1,7 @@
 package com.myapp.servlets;
 
-import com.myapp.dao.UserDAO;
-import com.myapp.model.User;
+import com.myapp.dao.ProductDAO;
+import com.myapp.model.Product;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author risha
  */
-public class RegisterServlet extends HttpServlet {
+public class AddProductServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -28,45 +28,34 @@ public class RegisterServlet extends HttpServlet {
 
         // Getting form values
         String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String pass = request.getParameter("password");
+        String priceStr = request.getParameter("price");
+        String image = request.getParameter("image");
 
         // Validate input
         if (name == null || name.trim().isEmpty() || 
-            email == null || email.trim().isEmpty() || 
-            pass == null || pass.trim().isEmpty()) {
-            String ctx = request.getContextPath();
-            response.sendRedirect(ctx + "/register.jsp?error=empty");
+            priceStr == null || priceStr.trim().isEmpty() || 
+            image == null || image.trim().isEmpty()) {
+            response.sendRedirect("addProduct.jsp?error=1");
             return;
         }
 
         try {
-            UserDAO dao = new UserDAO();
-
-            // Check if email already exists
-            if (dao.emailExists(email)) {
-                String ctx = request.getContextPath();
-                response.sendRedirect(ctx + "/register.jsp?error=exists");
-                return;
-            }
-
-            // Creating user object
-            User user = new User(name.trim(), email.trim(), pass.trim());
+            double price = Double.parseDouble(priceStr);
+            
+            // Creating product object
+            Product product = new Product(name.trim(), price, image.trim());
 
             // Saving to DB using Hibernate DAO
-            boolean result = dao.registerUser(user);
+            ProductDAO dao = new ProductDAO();
+            dao.saveOrUpdateProduct(product);
 
-            // Redirect based on result
-            String ctx = request.getContextPath();
-            if (result) {
-                response.sendRedirect(ctx + "/login.jsp?success=1");
-            } else {
-                response.sendRedirect(ctx + "/register.jsp?error=1");
-            }
+            // Redirect to products page on success
+            response.sendRedirect("ProductsServlet?success=1");
+        } catch (NumberFormatException e) {
+            response.sendRedirect("addProduct.jsp?error=invalid_price");
         } catch (Exception e) {
             e.printStackTrace();
-            String ctx = request.getContextPath();
-            response.sendRedirect(ctx + "/register.jsp?error=1");
+            response.sendRedirect("addProduct.jsp?error=1");
         }
     }
 
@@ -74,7 +63,8 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // Redirect to add product form
+        response.sendRedirect("addProduct.jsp");
     }
 
     @Override
@@ -90,7 +80,8 @@ public class RegisterServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Servlet to handle user registration";
+        return "Servlet to handle product addition";
     }// </editor-fold>
 
 }
+

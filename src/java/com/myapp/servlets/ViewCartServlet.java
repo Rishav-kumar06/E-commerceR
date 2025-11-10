@@ -1,7 +1,7 @@
 package com.myapp.servlets;
 
 import com.myapp.dao.ProductDAO;
-import com.myapp.models.Product;
+import com.myapp.model.Product;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

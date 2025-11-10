@@ -1,7 +1,7 @@
 package com.myapp.servlets;
 
 import com.myapp.dao.UserDAO;
-import com.myapp.models.User;
+import com.myapp.model.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,17 +31,36 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        UserDAO dao = new UserDAO();
-        User user = dao.loginUser(email, password);
+        // Validate input
+        if (email == null || email.trim().isEmpty() || 
+            password == null || password.trim().isEmpty()) {
+            String ctx = request.getContextPath();
+            response.sendRedirect(ctx + "/login.jsp?error=empty");
+            return;
+        }
 
-        if (user != null) {
-            // Creating session
-            HttpSession session = request.getSession();
-            session.setAttribute("loggedUser", user);
+        try {
+            UserDAO dao = new UserDAO();
+            User user = dao.loginUser(email.trim(), password.trim());
 
-            response.sendRedirect("home.jsp?login=success");
-        } else {
-            response.sendRedirect("login.jsp?error=1");
+            if (user != null) {
+                // Creating session
+                HttpSession session = request.getSession();
+                session.setAttribute("loggedUser", user);
+                session.setAttribute("username", user.getName());
+                session.setAttribute("userId", user.getId());
+
+                // Redirect to ProductsServlet instead of index.jsp (use context path)
+                String ctx = request.getContextPath();
+                response.sendRedirect(ctx + "/ProductsServlet");
+            } else {
+                String ctx = request.getContextPath();
+                response.sendRedirect(ctx + "/login.jsp?error=1");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            String ctx = request.getContextPath();
+            response.sendRedirect(ctx + "/login.jsp?error=1");
         }
     }
 

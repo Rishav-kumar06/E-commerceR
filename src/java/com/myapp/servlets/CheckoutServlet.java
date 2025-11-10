@@ -1,29 +1,34 @@
 package com.myapp.servlets;
 
 import com.myapp.dao.ProductDAO;
-import com.myapp.models.Product;
+import com.myapp.model.Product;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CheckoutServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        List<Integer> cart = (List<Integer>) session.getAttribute("cartItems");
+        Map<Integer, Integer> cart = (Map<Integer, Integer>) session.getAttribute("cartItems");
         List<Product> orderedProducts = new ArrayList<>();
         double total = 0;
 
         if (cart != null) {
             ProductDAO dao = new ProductDAO();
-            for (int id : cart) {
+            for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
+                int id = entry.getKey();
+                int quantity = entry.getValue();
                 Product p = dao.getProductById(id);
                 if (p != null) {
-                    orderedProducts.add(p);
-                    total += p.getPrice();
+                    for (int i = 0; i < quantity; i++) {
+                        orderedProducts.add(p);
+                    }
+                    total += p.getPrice() * quantity;
                 }
             }
             session.removeAttribute("cartItems");

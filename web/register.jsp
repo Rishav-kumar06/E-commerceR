@@ -38,8 +38,10 @@
         if ("exists".equals(error)) { 
     %>
         <p style="color:red; margin-top:10px;">Email already exists! Try another.</p>
+    <% } else if ("empty".equals(error)) { %>
+        <p style="color:red; margin-top:10px;">All fields are required. Please fill in all information.</p>
     <% } else if ("1".equals(error)) { %>
-        <p style="color:red; margin-top:10px;">Registration failed. Try again.</p>
+        <p style="color:red; margin-top:10px;">Registration failed. Please check your database connection and try again.</p>
     <% } %>
 </section>
 

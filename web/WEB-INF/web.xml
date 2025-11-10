@@ -35,6 +35,10 @@
         <servlet-name>RemoveFromCartServlet</servlet-name>
         <servlet-class>com.myapp.servlets.RemoveFromCartServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddProductServlet</servlet-name>
+        <servlet-class>com.myapp.servlets.AddProductServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
@@ -66,6 +70,10 @@
     <servlet-mapping>
         <servlet-name>RemoveFromCartServlet</servlet-name>
         <url-pattern>/RemoveFromCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProductServlet</servlet-name>
+        <url-pattern>/AddProductServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

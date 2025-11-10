@@ -1,22 +1,17 @@
 package com.myapp.util;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+/**
+ * Placeholder HibernateUtil kept for compatibility. Hibernate has been removed.
+ * Any attempt to use it will result in an UnsupportedOperationException.
+ */
+public final class HibernateUtil {
+    private HibernateUtil() { }
 
-public class HibernateUtil {
-
-    private static final SessionFactory sessionFactory;
-
-    static {
-        try {
-            sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("SessionFactory creation failed: " + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
+    public static Object getSessionFactory() {
+        throw new UnsupportedOperationException("Hibernate has been removed. Use com.myapp.util.DBConnectionUtil for JDBC connections.");
     }
 
-    public static SessionFactory getSessionFactory() { return sessionFactory; }
-
-    public static void shutdown() { getSessionFactory().close(); }
+    public static void shutdown() {
+        // No-op
+    }
 }

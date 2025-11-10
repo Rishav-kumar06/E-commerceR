@@ -34,9 +34,11 @@
     <% 
         String error = request.getParameter("error");
         String success = request.getParameter("success");
-        if ("1".equals(error)) { 
+        if ("empty".equals(error)) { 
     %>
-        <p style="color:red; margin-top:10px;">Invalid email or password!</p>
+        <p style="color:red; margin-top:10px;">Email and password are required.</p>
+    <% } else if ("1".equals(error)) { %>
+        <p style="color:red; margin-top:10px;">Invalid email or password! Please check your credentials and try again.</p>
     <% } else if ("1".equals(success)) { %>
         <p style="color:green; margin-top:10px;">Registration successful! Please login.</p>
     <% } %>
